@@ -4,7 +4,6 @@ import { getCoinList } from "../CoinApi";
 import { Crypto } from "../CryptoContext";
 import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
-import useDebounceFunction from "../hooks/useDebounceFunction";
 import useDebounceValue from "../hooks/useDebounceValue";
 
 const CoinTable = () => {
@@ -12,6 +11,9 @@ const CoinTable = () => {
   const [coins, setCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [pages, setPages] = useState(1)
+  const [pageSize, setPageSize] = useState(10);
+  const debouncedSearchTerm = useDebounceValue(searchTerm, 1000);
   const navigate = useNavigate();
 
   // Fetch coin list
@@ -32,11 +34,6 @@ const CoinTable = () => {
     fetchCoins();
   }, [currency]);
 
- const handleSearch = (value) => {
-  setSearchTerm(value);
-};
-
-  const debouncedSearchTerm  = useDebounceValue(searchTerm, 1000);
 
   const filteredCoins = useMemo(() => {
     return coins.filter(
@@ -46,6 +43,27 @@ const CoinTable = () => {
     );
   }, [coins, debouncedSearchTerm]);
 
+  const totalItems = filteredCoins.length
+  const totalPages = Math.ceil(totalItems / pageSize) || 1;
+
+  useEffect(() => {
+    if (totalPages < pages) {
+      setPages(totalPages)
+    }
+  }, [pages, totalPages])
+
+  const pageItems = useMemo(() => {
+    const startIndex = (pages - 1) * pageSize 
+    const endIndex = startIndex + pageSize
+    return filteredCoins.slice(startIndex, endIndex)
+  }, [filteredCoins, pageSize, pages])
+
+
+   const gotoPage = (p) => setPages(Math.max(1, Math.min(totalPages, p)));
+   const handlePageSizeChange = (e) => {
+    setPageSize(Number(e.target.value));
+    setPages(1);
+  };
   return (
     <div className="cointable-container">
       <div className="heading">
@@ -61,12 +79,17 @@ const CoinTable = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
+       <select value={pageSize} onChange={handlePageSizeChange}>
+          <option value={10}>10 / page</option>
+          <option value={25}>25 / page</option>
+          <option value={50}>50 / page</option>
+        </select>
 
       {isLoading ? (
         <div className="loader">
           <ClipLoader color="#36d7b7" size={50} />
         </div>
-      ) : (
+      ) : (<>
         <div className="coin-table">
           <table>
             <thead>
@@ -78,7 +101,7 @@ const CoinTable = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredCoins.map((coin) => (
+              {pageItems.map((coin) => (
                 <tr
                   key={coin.id}
                   onClick={() => navigate(`/coin-info/${coin.id}`)}
@@ -111,6 +134,16 @@ const CoinTable = () => {
             </tbody>
           </table>
         </div>
+         {/* Pagination controls */}
+          <div className="pagination">
+            <button onClick={() => gotoPage(1)} disabled={pages === 1}>First</button>
+            <button onClick={() => gotoPage(pages - 1)} disabled={pages === 1}>Prev</button>
+
+            <span>Page {pages} of {totalPages}</span>
+
+            <button onClick={() => gotoPage(pages + 1)} disabled={pages === totalPages}>Next</button>
+            <button onClick={() => gotoPage(totalPages)} disabled={pages === totalPages}>Last</button>
+          </div></>
       )}
     </div>
   );
