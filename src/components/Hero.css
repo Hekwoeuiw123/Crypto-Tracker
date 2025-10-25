@@ -1,0 +1,32 @@
+.hero-items{
+    position: absolute;
+    top:30%;
+    left:50%;
+    transform: translateX(-50%);
+    margin-bottom: 2rem;
+}
+.hero-tag-line{
+    display: flex;justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.hero-items .hero-text{
+   font-size: 4rem;
+   color:rgb(39, 255, 255);
+   text-transform: uppercase;
+   letter-spacing: 0.3rem;
+}
+.hero-para{
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    color:rgb(50, 197, 197);
+    text-align: center;
+}
+.coin-corausal {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 1rem 0;
+}

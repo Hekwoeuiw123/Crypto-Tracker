@@ -1,0 +1,93 @@
+.cointable-container {
+  width: 90%;
+  margin: 5rem auto;
+  color: white;
+  text-align: center;
+}
+
+.heading h1 {
+  color: cyan;
+  font-size: 2rem;
+}
+
+.heading p {
+  color: #aaa;
+  margin-top: 0.5rem;
+}
+
+.search-coin {
+  margin: 1.5rem 0;
+}
+
+.search-coin input {
+  width: 50%;
+  padding: 0.7rem;
+  font-size: 1rem;
+  border: 2px solid cyan;
+  border-radius: 8px;
+  background-color: transparent;
+  color: white;
+  outline: none;
+}
+
+.search-coin input:focus {
+  border-color: #00e6e6;
+}
+
+.coin-table {
+  overflow-x: auto;
+}
+
+.coin-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  overflow-x: hidden;
+}
+
+.coin-table th, .coin-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #444;
+}
+
+.coin-table th {
+  color: cyan;
+  font-size: 1rem;
+}
+
+.coin-name {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-align: left;
+}
+
+.coin-name img {
+  border-radius: 50%;
+}
+
+.coin-table tr:hover {
+  background-color: rgba(0, 255, 255, 0.1);
+  cursor: pointer;
+  transform: scale(1.01);
+  transition: 0.3s ease;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-coin input {
+    width: 80%;
+  }
+  .heading h1 {
+    font-size: 1.5rem;
+  }
+}
