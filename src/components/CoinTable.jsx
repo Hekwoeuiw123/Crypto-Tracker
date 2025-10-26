@@ -78,12 +78,13 @@ const CoinTable = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-      </div>
-       <select value={pageSize} onChange={handlePageSizeChange}>
+        <select value={pageSize} onChange={handlePageSizeChange}>
           <option value={10}>10 / page</option>
           <option value={25}>25 / page</option>
           <option value={50}>50 / page</option>
         </select>
+      </div>
+       
 
       {isLoading ? (
         <div className="loader">
@@ -136,13 +137,13 @@ const CoinTable = () => {
         </div>
          {/* Pagination controls */}
           <div className="pagination">
-            <button onClick={() => gotoPage(1)} disabled={pages === 1}>First</button>
-            <button onClick={() => gotoPage(pages - 1)} disabled={pages === 1}>Prev</button>
+            <button style={{pointerEvents:pages === 1?"none":"visible"}} onClick={() => gotoPage(1)} disabled={pages === 1}>First</button>
+            <button style={{pointerEvents:pages === 1?"none":"visible"}} onClick={() => gotoPage(pages - 1)} disabled={pages === 1}>Prev</button>
 
             <span>Page {pages} of {totalPages}</span>
 
-            <button onClick={() => gotoPage(pages + 1)} disabled={pages === totalPages}>Next</button>
-            <button onClick={() => gotoPage(totalPages)} disabled={pages === totalPages}>Last</button>
+            <button style={{pointerEvents:pages === totalPages?"none":"visible"}} onClick={() => gotoPage(pages + 1)} disabled={pages === totalPages}>Next</button>
+            <button style={{pointerEvents:pages === totalPages?"none":"visible"}} onClick={() => gotoPage(totalPages)} disabled={pages === totalPages}>Last</button>
           </div></>
       )}
     </div>

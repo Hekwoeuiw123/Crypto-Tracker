@@ -16,7 +16,11 @@
 }
 
 .search-coin {
-  margin: 1.5rem 0;
+  display: flex;
+  gap: 1.4rem;
+  margin: 1.7rem 0;
+  justify-content: center;
+  /* pointer-events: ; */
 }
 
 .search-coin input {
@@ -72,6 +76,18 @@
   transition: 0.3s ease;
 }
 
+.pagination{
+  margin: 2rem 0;
+}
+.pagination button{
+  cursor: pointer;
+  padding: 0.7rem 1.3rem;
+  background: #65e8ff56;
+  border-radius: 8px;
+  border: 2px solid cyan;
+  margin: 0.7rem;
+  color:#b3b3cb;
+}
 .loader {
   display: flex;
   justify-content: center;
